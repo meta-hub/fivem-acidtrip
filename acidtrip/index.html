@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
+<script src="http://www.youtube.com/player_api"></script>
+<script>
+var player;
+function DoMusic() {
+  if (player) {
+    player.playVideo();//({mediaContentUrl:'FHVD9ft_ANw'});
+  } else {
+    player = new YT.Player('player', {
+        videoId: 'FHVD9ft_ANw',
+        loop: true,
+        events: {
+            onReady: function (e) {
+                e.target.playVideo();
+            }
+        }
+    });
+  }
+}
+
+$(function() {
+  window.addEventListener('message', function(event) {
+    if (event.data.type == "playMusic") {
+      DoMusic();
+    } else if (event.data.type == "stopMusic") {
+      player.pauseVideo();
+      player.seekTo(1);
+    }
+  });
+});
+</script>
+</body>
+</html>
