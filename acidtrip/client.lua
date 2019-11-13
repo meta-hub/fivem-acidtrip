@@ -127,7 +127,9 @@ local MarioZOff = -20.0
 local MarioZAdd = 0.01
 
 DoAcid = function(time)
-  SendNUIMessage({type = "playMusic"})
+  local song = 1
+  if time >= 200000 then song = 2; end
+  SendNUIMessage({type = "playMusic", song = song})
 
   InitCubes()
 
@@ -381,4 +383,4 @@ PointOnSphere = function(alt,azu,radius,orgX,orgY,orgZ)
   end
 end
 
-RegisterCommand("acid", function(...) DoAcid(180000); end)
+RegisterCommand("acid", function(...) DoAcid(20000); end)
