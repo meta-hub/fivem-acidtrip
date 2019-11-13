@@ -9,16 +9,21 @@
 <script src="http://www.youtube.com/player_api"></script>
 <script>
 var player;
-function DoMusic() {
+function DoMusic(song) {
+  var vid = (song == 1 ? 'lkM7aocxsxA' : 'FHVD9ft_ANw')
   if (player) {
-    player.playVideo();//({mediaContentUrl:'FHVD9ft_ANw'});
+    player.loadVideoById(vid,(song == 1 ? 50 : 1));
+    player.playVideo();
   } else {
     player = new YT.Player('player', {
-        videoId: 'FHVD9ft_ANw',
+        videoId: vid,
         loop: true,
         events: {
             onReady: function (e) {
                 e.target.playVideo();
+                if (song == 1) {
+                  e.target.seekTo(50);
+                }
             }
         }
     });
@@ -28,10 +33,9 @@ function DoMusic() {
 $(function() {
   window.addEventListener('message', function(event) {
     if (event.data.type == "playMusic") {
-      DoMusic();
+      DoMusic(event.data.song);
     } else if (event.data.type == "stopMusic") {
       player.pauseVideo();
-      player.seekTo(1);
     }
   });
 });
