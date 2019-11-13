@@ -127,8 +127,7 @@ local MarioZOff = -20.0
 local MarioZAdd = 0.01
 
 DoAcid = function(time)
-  local song = 1
-  if time >= 200000 then song = 2; end
+  local song = (time and time >= 200000 and 2 or 1)
   SendNUIMessage({type = "playMusic", song = song})
 
   InitCubes()
